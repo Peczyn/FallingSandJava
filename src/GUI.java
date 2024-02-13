@@ -21,16 +21,12 @@ public class GUI extends JFrame{ public JPanel all = new JPanel();
 
         JButton start = new JButton("Start");
         JButton stop = new JButton("Stop");
+        JButton reset = new JButton("Reset");
+        JRadioButton showGrid = new JRadioButton("Show Grid");
 
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ArrayList<Boolean> temp = new ArrayList<>();
-                for(int i =0; i<grid.getGridSize(); i++)
-                {
-                    temp.add(true);
-                }
-                grid.grid.set(1,temp);
                 grid.isGridRunning = true;
             }
         });
@@ -42,8 +38,33 @@ public class GUI extends JFrame{ public JPanel all = new JPanel();
             }
         });
 
+        reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.isGridRunning = false;
+                for(ArrayList<Boolean> arr : grid.grid)
+                {
+                    for(int i =0; i<grid.getGridSize(); i++)
+                    {
+                        arr.set(i,false);
+                    }
+                }
+            }
+        });
+
+        showGrid.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                grid.isGridShown = !grid.isGridShown;
+            }
+        });
+
+        showGrid.setSelected(true);
+
         north.add(start);
         north.add(stop);
+        north.add(reset);
+        north.add(showGrid);
         all.add(north, BorderLayout.NORTH);
         all.add(matrix, BorderLayout.CENTER);
         System.out.println("1");
